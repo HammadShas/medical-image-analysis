@@ -1,1 +1,23 @@
+# Ignore Jupyter Notebook autosaved
 **/.ipynb_checkpoints/
+
+# Python cache files
+_pycache_/
+*.py[cod]
+
+# Ignore dataset files (Optional - if large)
+*.csv
+*.zip
+*.tar.gz
+*.h5
+*.pt
+*.pth
+
+# Ignore model weights
+models/*.pt
+models/*.pth
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
