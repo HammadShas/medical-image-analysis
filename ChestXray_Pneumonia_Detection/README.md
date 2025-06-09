@@ -22,3 +22,85 @@ ChestXray_Pneumonia_Detection/
 ├── models/                         ← (Empty) Model files will be saved here
 ├── results/                        ← (Empty) Visual results, metrics, graphs
 ```
+## Dataset Information
+
+The dataset used in this project is the **Chest X-Ray Images (Pneumonia)** dataset, which contains chest radiographs categorized into three subsets: training, validation, and testing. Each subset includes two classes — **NORMAL** and **PNEUMONIA**.
+
+This dataset was originally curated by **Kermany et al. (2018)** for pediatric pneumonia diagnosis and later made publicly available on Kaggle by **Paul Mooney**.
+
+- 📄 Original Source: *Kermany, Daniel S., et al. "Identifying medical diagnoses and treatable diseases by image-based deep learning." Cell 172.5 (2018): 1122-1131.*
+- 📁 Kaggle Repository: [Chest X-Ray Images (Pneumonia)](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia)
+
+> Note: For ethical use and citation, please refer to the license or publication guidelines provided by the dataset authors.
+## 💻 How to Run
+
+Follow the steps below to set up and run the project locally:
+
+1. **Clone the Repository**
+
+   ```bash
+   git clone https://github.com/your-username/medical-image-analysis.git
+   cd medical-image-analysis/ChestXray_Pneumonia_Detection
+   ```
+
+2. **Set Up a Virtual Environment (Optional but Recommended)**
+
+   ```bash
+   python -m venv medai
+   source medai/bin/activate      # For Linux/macOS
+   medai\Scripts\activate         # For Windows
+   ```
+
+3. **Install Required Packages**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Download Dataset**
+
+   - This project uses the **Chest X-Ray Images (Pneumonia)** dataset available on [Kaggle](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia).
+   - Extract the dataset into the following folder structure:
+
+     ```
+     ChestXray_Pneumonia_Detection/
+     └── data/
+         └── chest_xray/
+             ├── train/
+             ├── test/
+             └── val/
+     ```
+
+5. **Run the Notebook**
+
+   Launch Jupyter Notebook:
+
+   ```bash
+   jupyter notebook
+   ```
+
+   Open and execute:  
+   `notebooks/01_data_loading.ipynb`
+## Dependencies
+
+This project uses the following Python packages:
+
+- numpy
+- pandas
+- matplotlib
+- seaborn
+- opencv-python
+- scikit-learn
+- tqdm
+- jupyter
+- torch
+- torchvision
+- kaggle
+
+It is recommended to use a virtual environment to manage these dependencies.
+
+To install all packages, run:
+
+```bash
+pip install -r requirements.txt
+```
