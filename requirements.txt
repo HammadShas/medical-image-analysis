@@ -1,0 +1,12 @@
+numpy==2.1.2
+tqdm==4.67.1
+torch==2.7.0+cu128
+torchvision==0.22.0+cu128
+kaggle==1.7.4.5
+notebook==7.4.3
+pandas
+matplotlib
+seaborn
+opencv-python
+scikit-learn
+jupyter
