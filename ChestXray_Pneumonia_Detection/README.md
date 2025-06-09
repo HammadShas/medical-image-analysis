@@ -28,7 +28,7 @@ The dataset used in this project is the **Chest X-Ray Images (Pneumonia)** datas
 
 This dataset was originally curated by **Kermany et al. (2018)** for pediatric pneumonia diagnosis and later made publicly available on Kaggle by **Paul Mooney**.
 
-- 📄 Original Source: *Kermany, Daniel S., et al. "Identifying medical diagnoses and treatable diseases by image-based deep learning." Cell 172.5 (2018): 1122-1131.*
+- 📄 Original Source: *Kermany, Daniel S., et al. ["Identifying medical diagnoses and treatable diseases by image-based deep learning."](https://doi.org/10.1016/j.cell.2018.02.010)* *Cell 172.5 (2018): 1122-1131.*
 - 📁 Kaggle Repository: [Chest X-Ray Images (Pneumonia)](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia)
 
 > Note: For ethical use and citation, please refer to the license or publication guidelines provided by the dataset authors.
@@ -127,4 +127,4 @@ Each notebook is designed to be run sequentially, but can also be used independe
 
 - Dataset provided by [Paul Mooney](https://github.com/ieee8023/covid-chestxray-dataset).
 - Developed by HammadShas.
-- This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+- This project is licensed under the MIT License. See the [LICENSE](../LICENSE) file for details.
