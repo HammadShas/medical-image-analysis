@@ -1,51 +1,62 @@
 # scripts/data_preprocessing.py
 
+# ====== Core PyTorch & TorchVision ======
 import torch
-from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
+from torchvision import datasets, transforms, utils
+from torchvision.datasets import ImageFolder
+
+# ====== Utilities ======
 from pathlib import Path
 import matplotlib.pyplot as plt
+import numpy as np
 
-# Image preprocessing pipeline
-transform = transforms.Compose([
-    transforms.Resize((224, 224)),
-    transforms.ToTensor(),
-    transforms.Normalize(mean=[0.5], std=[0.5])  # For grayscale images
-])
-
-# Base dataset path
+# ====== Dataset Path ======
 base_dir = Path("../data/chest_xray")
 
-# Load datasets directly
-train_dataset = datasets.ImageFolder(root=base_dir / "train", transform=transform)
-val_dataset   = datasets.ImageFolder(root=base_dir / "val", transform=transform)
-test_dataset  = datasets.ImageFolder(root=base_dir / "test", transform=transform)
+# ====== Image Transforms ======
+train_transforms = transforms.Compose([
+    transforms.Resize((224, 224)),
+    transforms.RandomHorizontalFlip(),       # Augmentation for training
+    transforms.ToTensor(),
+    transforms.Normalize([0.5], [0.5])        # Normalize grayscale to [-1, 1]
+])
 
-# Class labels
+val_test_transforms = transforms.Compose([
+    transforms.Resize((224, 224)),
+    transforms.ToTensor(),
+    transforms.Normalize([0.5], [0.5])
+])
+
+# ====== Datasets ======
+train_dataset = ImageFolder(root=base_dir / "train", transform=train_transforms)
+val_dataset   = ImageFolder(root=base_dir / "val", transform=val_test_transforms)
+test_dataset  = ImageFolder(root=base_dir / "test", transform=val_test_transforms)
+
 class_names = train_dataset.classes
-print("Classes:", class_names)
-print("Class to Index Mapping:", train_dataset.class_to_idx)
 
-# DataLoaders
-train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
-val_loader   = DataLoader(val_dataset, batch_size=32)
-test_loader  = DataLoader(test_dataset, batch_size=32)
+# ====== DataLoaders ======
+BATCH_SIZE = 32
 
-# Utility: Display a tensor image
-def imshow(img_tensor):
-    img = img_tensor.permute(1, 2, 0)  # Convert (C, H, W) to (H, W, C)
-    img = img * 0.5 + 0.5              # Unnormalize
-    img = img.clamp(0, 1)              # Clamp to [0,1]
-    plt.imshow(img, cmap='gray')
+train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
+val_loader   = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2)
+test_loader  = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2)
+
+# ====== Visualization ======
+def show_batch(dl, n=16):
+    """Displays a grid of images from a DataLoader batch."""
+    images, labels = next(iter(dl))
+    grid = utils.make_grid(images[:n], nrow=4, padding=2, normalize=True)
+    npimg = grid.numpy().transpose((1, 2, 0))
+
+    plt.figure(figsize=(8, 8))
+    plt.imshow(npimg, cmap='gray')
     plt.axis('off')
-
-# Visualize sample images
-if __name__ == "__main__":
-    images, labels = next(iter(train_loader))
-    plt.figure(figsize=(12, 4))
-    for i in range(5):
-        plt.subplot(1, 5, i + 1)
-        imshow(images[i])
-        plt.title(class_names[labels[i].item()])
-    plt.tight_layout()
+    plt.title('Sample Image Batch from DataLoader')
     plt.show()
+
+# ====== Optional Script Preview ======
+if __name__ == "__main__":
+    print("Class names:", class_names)
+    print("Class-to-index mapping:", train_dataset.class_to_idx)
+    show_batch(train_loader)
