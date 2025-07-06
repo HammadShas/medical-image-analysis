@@ -1,130 +1,216 @@
-## 🩺 Chest X-ray Pneumonia Detection using Deep Learning
+# Chest X-ray Pneumonia Detection 
 
-This project leverages deep learning techniques to detect pneumonia from chest X-ray images. It is part of the broader **Medical Image Analysis** repository and aims to assist healthcare professionals by providing an automated and reliable diagnostic aid. The project explores data preprocessing, visualization, and model development using convolutional neural networks (CNNs), enabling early detection and improving diagnostic efficiency.
+![License](https://img.shields.io/badge/License-MIT-blue.svg)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)
+![Framework](https://img.shields.io/badge/Framework-PyTorch-red)
+![Dataset](https://img.shields.io/badge/Dataset-ChestX--ray--Pneumonia-brightgreen)
 
-### Key Goals:
-- 📊 Load, visualize, and explore the dataset  
-- 🧼 Preprocess X-ray images for model readiness  
-- 🧠 Train and evaluate deep learning models for binary classification (Pneumonia vs. Normal)  
-- 🧪 Plan for future improvements including model deployment and performance tuning
-## 🗂️ Project Structure
+> A deep learning–based medical imaging project for detecting **Pneumonia** in **Chest X-rays** using **PyTorch**, **ResNet-50**, and transfer learning. Developed as part of the broader **Medical Image Analysis** repository, this project aims to support healthcare professionals by offering an automated and reliable diagnostic tool. To ensure balanced training and improve generalization, it integrates two publicly available datasets. The overall objective is to facilitate early and accurate detection of pneumonia through scalable and interpretable AI models.
+
+---
+
+## Objectives
+
+- Explore and visualize the Chest X-ray dataset.
+- Balance the dataset by augmenting normal samples from another source.
+- Preprocess X-ray images using `torchvision.transforms`.
+- Train a deep convolutional model (ResNet-50) using transfer learning.
+- Evaluate model performance with standard classification metrics.
+- Visualize loss curves, confusion matrix, and predictions.
+
+---
+
+## Project Structure
 
 ```
 ChestXray_Pneumonia_Detection/
-├── README.md                       ← Project-specific documentation
-├── data/                           ← Dataset folder (excluded from GitHub)
+├── data/                          # Combined dataset (train/test/val)
 │   └── chest_xray/
 │       ├── train/
 │       ├── test/
 │       └── val/
-├── notebooks/
-│   └── 01_data_loading.ipynb       ← Data loading & visualization notebook
-├── models/                         ← (Empty) Model files will be saved here
-├── results/                        ← (Empty) Visual results, metrics, graphs
+├── notebooks/                     # Jupyter Notebooks (modular workflow)
+│   ├── 01_data_loading.ipynb
+│   ├── 02_data_preprocessing.ipynb
+│   ├── 03_model_training.ipynb
+│   └── 04_evaluate_model.ipynb
+├── scripts/                       # (Optional) Python script versions
+│   ├── data_loading.py
+│   └── data_preprocessing.py
+├── results/                       # Metrics, confusion matrix, and plots
+├── outputs/                       # Saved model checkpoints, logs
+├── README.md                      # Project documentation
+└── requirements.txt               # Python dependencies
 ```
-## Dataset Information
 
-The dataset used in this project is the **Chest X-Ray Images (Pneumonia)** dataset, which contains chest radiographs categorized into three subsets: training, validation, and testing. Each subset includes two classes — **NORMAL** and **PNEUMONIA**.
+---
 
-This dataset was originally curated by **Kermany et al. (2018)** for pediatric pneumonia diagnosis and later made publicly available on Kaggle by **Paul Mooney**.
+## Datasets Used
 
-- 📄 Original Source: *Kermany, Daniel S., et al. ["Identifying medical diagnoses and treatable diseases by image-based deep learning."](https://doi.org/10.1016/j.cell.2018.02.010)* *Cell 172.5 (2018): 1122-1131.*
-- 📁 Kaggle Repository: [Chest X-Ray Images (Pneumonia)](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia)
+### 1. Chest X-Ray Images (Pneumonia)
+- **Source:** [Kaggle - Paul Mooney](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia)
+- **Classes:** `NORMAL`, `PNEUMONIA`
+- **Structure:** Images organized into `train/`, `test/`, `val/` folders
 
-> Note: For ethical use and citation, please refer to the license or publication guidelines provided by the dataset authors.
-## 💻 How to Run
+### 2. TB Chest X-ray Dataset (for Normal Samples Only)
+- **Source:** [Kaggle - Tawsifur Rahman](https://www.kaggle.com/datasets/tawsifurrahman/tuberculosis-tb-chest-xray-dataset)
+- **Usage:** Only the `NORMAL` class images from this dataset were used to balance the underrepresented class.
 
-Follow the steps below to set up and run the project locally:
+> Note: Ensure ethical usage by referring to licensing and citations provided by the original dataset authors.
+
+### Dataset Citation
+
+The primary dataset used in this project was originally curated by **Kermany et al. (2018)** for pediatric pneumonia diagnosis, and later made publicly available on Kaggle by **Paul Mooney**.
+
+> *Kermany, Daniel S., et al. ["Identifying medical diagnoses and treatable diseases by image-based deep learning."](https://doi.org/10.1016/j.cell.2018.02.010)*  
+> *Cell 172.5 (2018): 1122–1131.*
+
+Please ensure appropriate citation and adherence to dataset licensing when using this resource in derivative works or publications.
+
+---
+
+## Model Details
+
+- **Architecture:** ResNet-50 (pretrained on ImageNet)
+- **Technique:** Transfer Learning
+- **Loss Function:** Binary Cross Entropy Loss
+- **Optimizer:** Adam
+- **Metrics:** Accuracy, Precision, Recall, F1-score, Confusion Matrix
+
+---
+
+## How to Run
 
 1. **Clone the Repository**
 
-   ```bash
-   git clone https://github.com/your-username/medical-image-analysis.git
-   cd medical-image-analysis/ChestXray_Pneumonia_Detection
-   ```
+    ```bash
+    git clone https://github.com/your-username/medical-image-analysis.git
+    cd medical-image-analysis/ChestXray_Pneumonia_Detection
+    ```
 
-2. **Set Up a Virtual Environment (Optional but Recommended)**
+2. **Create Virtual Environment (Recommended)**
 
-   ```bash
-   python -m venv medai
-   source medai/bin/activate      # For Linux/macOS
-   medai\Scripts\activate         # For Windows
-   ```
+    ```bash
+    conda create -n medai python=3.10
+    conda activate medai
+    ```
 
-3. **Install Required Packages**
+3. **Install Dependencies**
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-4. **Download Dataset**
+4. **Download and Prepare Datasets**
 
-   - This project uses the **Chest X-Ray Images (Pneumonia)** dataset available on [Kaggle](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia).
-   - Extract the dataset into the following folder structure:
+    - [Chest X-ray Pneumonia Dataset](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia)
+    - [TB Chest X-ray Dataset](https://www.kaggle.com/datasets/tawsifurrahman/tuberculosis-tb-chest-xray-dataset) – *Only `NORMAL` images used*
 
-     ```
-     ChestXray_Pneumonia_Detection/
-     └── data/
-         └── chest_xray/
-             ├── train/
-             ├── test/
-             └── val/
-     ```
+    Organize as:
 
-5. **Run the Notebook**
+    ```
+    data/
+    └── chest_xray/
+        ├── train/
+        ├── test/
+        └── val/
+    ```
 
-   Launch Jupyter Notebook:
+5. **Launch Jupyter Notebooks**
 
-   ```bash
-   jupyter notebook
-   ```
+    ```bash
+    jupyter notebook
+    ```
 
-   Open and execute:  
-   `notebooks/01_data_loading.ipynb`
+    Run notebooks step-by-step in this order:
+    - `01_data_loading.ipynb`
+    - `02_data_preprocessing.ipynb`
+    - `03_model_training.ipynb`
+    - `04_evaluate_model.ipynb`
+
+---
+
+## Sample Outputs
+
+- **Classification Report:**
+
+    ```
+    Class         Precision     Recall   F1-Score
+    --------------------------------------------
+    Normal            98.01      92.06      94.94
+    Pneumonia         92.51      98.13      95.24
+    --------------------------------------------
+    Macro Avg         95.26      95.09      95.09
+    Weighted Avg      95.26      95.09      95.09
+    ```
+
+- **Confusion Matrix:**
+    - Raw counts and class-wise percentages visualized using heatmaps.
+    - High true positive and true negative rates observed.
+
+- **ROC Curve:**
+    - **AUC Score:** `0.9884`
+    - Clear separation between classes with minimal false positives.
+
+---
+
+## Results
+
+| Metric         | Value     |
+|----------------|-----------|
+| **Accuracy**   | 95.09%    |
+| **Precision**  | 92.51–98.01% |
+| **Recall**     | 92.06–98.13% |
+| **F1-Score**   | 94.94–95.24% |
+| **AUC Score**  | 0.9884    |
+
+> These results are based on the final evaluation of the model using the test set. Performance may vary slightly depending on training runs and data augmentations.
+
+---
+
 ## Dependencies
 
-This project uses the following Python packages:
-
+- Python 3.10+
+- PyTorch
+- torchvision
 - numpy
 - pandas
 - matplotlib
 - seaborn
-- opencv-python
 - scikit-learn
+- opencv-python
 - tqdm
 - jupyter
-- torch
-- torchvision
 - kaggle
 
-It is recommended to use a virtual environment to manage these dependencies.
-
-To install all packages, run:
+To install all packages:
 
 ```bash
 pip install -r requirements.txt
 ```
-The requirements.txt file contains the exact package versions used in this project.
-## Notebooks Explained
 
-This project contains several Jupyter notebooks, each focusing on different aspects of the Chest X-ray Pneumonia Detection pipeline:
+---
 
-- **Data_Preprocessing.ipynb**: Data cleaning, augmentation, and preparation steps.
-- **Model_Training.ipynb**: Building, training, and validating deep learning models.
-- **Model_Evaluation.ipynb**: Performance metrics, visualization of results, and model comparison.
-- **Inference.ipynb**: Demonstration of running the trained model on new chest X-ray images for pneumonia detection.
-
-Each notebook is designed to be run sequentially, but can also be used independently for specific tasks.
 ## Future Work
 
-- Enhance model performance through hyperparameter tuning and advanced architectures.
-- Expand the dataset with more diverse and annotated chest X-ray images.
-- Develop a user-friendly interface for easier deployment and real-time inference.
-- Integrate explainability methods to improve model interpretability and trust.
-- Explore multi-modal data integration to improve diagnostic accuracy.
+- Integrate more complex architectures like DenseNet or EfficientNet.
+- Add Grad-CAM for explainable AI (XAI).
+- Deploy as a web app using Streamlit or Flask.
+- Expand dataset diversity (age groups, imaging conditions).
+- Perform multi-label classification (e.g., TB + Pneumonia detection).
 
-## Credits / License
+---
 
-- Dataset provided by [Paul Mooney](https://github.com/ieee8023/covid-chestxray-dataset).
-- Developed by HammadShas.
-- This project is licensed under the MIT License. See the [LICENSE](../LICENSE) file for details.
+## Acknowledgements
+
+- [Kaggle: Chest X-ray Images (Pneumonia)](https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia)
+- [Kaggle: TB Chest X-ray Dataset](https://www.kaggle.com/datasets/tawsifurrahman/tuberculosis-tb-chest-xray-dataset)
+- ResNet authors & PyTorch community
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](../LICENSE) file for more details.
+
+Developed by **HammadShas**
