@@ -37,6 +37,7 @@ ChestXray_Pneumonia_Detection/
 ├── scripts/                       # (Optional) Python script versions
 │   ├── data_loading.py
 │   └── data_preprocessing.py
+│   └── model_training.py
 ├── results/                       # Metrics, confusion matrix, and plots
 ├── outputs/                       # Saved model checkpoints, logs
 ├── README.md                      # Project documentation
